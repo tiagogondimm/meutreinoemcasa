@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Meu Treino Pro - Gemini Dark</title>
+    <title>Meu Treino Pro - Final</title>
     
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800;900&display=swap" rel="stylesheet">
     
-    <!-- Tailwind CSS Customizado -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -37,23 +37,30 @@
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-        /* Estilos Ativos Dinâmicos */
-        .btn-active-weight { 
-            background-color: #6366f1 !important; 
-            color: white !important; 
-            box-shadow: 0 10px 20px -5px rgba(99, 102, 241, 0.4); 
-            border-color: transparent !important; 
-        }
-        .btn-active-cardio { 
-            background-color: #f97316 !important; 
-            color: white !important; 
-            box-shadow: 0 10px 20px -5px rgba(249, 115, 22, 0.4); 
-            border-color: transparent !important; 
+        /* Estilos dos botões de dia ativos */
+        .btn-active-weight {
+            background-color: #6366f1 !important;
+            color: white !important;
+            box-shadow: 0 8px 15px -5px rgba(99, 102, 241, 0.5);
+            border: none !important;
         }
 
+        .btn-active-cardio {
+            background-color: #f97316 !important;
+            color: white !important;
+            box-shadow: 0 8px 15px -5px rgba(249, 115, 22, 0.5);
+            border: none !important;
+        }
+
+        /* Safe area para iPhones com notch */
         header { padding-top: env(safe-area-inset-top); }
-        .card-anim { transition: transform 0.2s ease, opacity 0.2s ease; }
-        .card-anim:active { transform: scale(0.97); opacity: 0.9; }
+
+        .card-tap {
+            transition: transform 0.1s ease, background-color 0.2s ease;
+        }
+        .card-tap:active {
+            transform: scale(0.98);
+        }
     </style>
 </head>
 <body class="pb-32">
@@ -61,90 +68,74 @@
 
     <script>
         const APP_NAME = "MEU TREINO";
-        const SUB_TITLE = "Academia do Prédio";
+        const SUB_TITLE = "ACADEMIA DO PRÉDIO";
 
-        // IDs DE VÍDEO ATUALIZADOS E TESTADOS (Canais Estáveis)
         const workoutData = [
             { day: "Segunda", muscles: "Peito, Ombro e Tríceps", type: "weight", exercises: [
-                { name: "Supino Reto Halteres", sets: "3x12", vid: "066pEcR6_Ww" },
-                { name: "Crucifixo Halteres", sets: "3x15", vid: "fI7X_zrsI8E" },
-                { name: "Desenv. Halteres", sets: "3x10", vid: "M2rwvNhSctM" },
-                { name: "Elevação Lateral", sets: "3x15", vid: "PPrf3_L63qE" },
-                { name: "Tríceps Pulley", sets: "3x12", vid: "2-LID_Z8-0o" },
-                { name: "Tríceps Francês", sets: "3x12", vid: "nRiJVZDpdL0" }
+                { name: "Supino Reto com Halteres", sets: "3x12" },
+                { name: "Crucifixo com Halteres", sets: "3x15" },
+                { name: "Desenvolvimento com Halteres", sets: "3x10" },
+                { name: "Elevação Lateral com Halteres", sets: "3x15" },
+                { name: "Tríceps Pulley na Polia", sets: "3x12" },
+                { name: "Tríceps Francês com Halter", sets: "3x12" }
             ]},
             { day: "Terça", muscles: "Costas e Bíceps", type: "weight", exercises: [
-                { name: "Pulldown Polia", sets: "3x12", vid: "CAwf7n6Luuc" },
-                { name: "Face Pull Polia", sets: "3x15", vid: "rep-qV5IbNM" },
-                { name: "Puxada Baixa Polia", sets: "3x12", vid: "GZbfZ033f74" },
-                { name: "Remada Curvada", sets: "4x10", vid: "6TSz5asNQm8" },
-                { name: "Rosca Martelo", sets: "3x12", vid: "zC3nLlEvin4" },
-                { name: "Rosca Direta", sets: "3x12", vid: "jn0YdaSba7k" }
+                { name: "Pulldown na Polia", sets: "3x12" },
+                { name: "Face Pull na Polia", sets: "3x15" },
+                { name: "Puxada Baixa na Polia", sets: "3x12" },
+                { name: "Remada Curvada com Halteres", sets: "4x10" },
+                { name: "Rosca Martelo com Halteres", sets: "3x12" },
+                { name: "Rosca Direta com Halteres", sets: "3x12" }
             ]},
-            { day: "Quarta", muscles: "Pernas (Máquinas)", type: "weight", exercises: [
-                { name: "Leg Press 45°", sets: "3x12", vid: "IZxyjW7MPJQ" },
-                { name: "Cadeira Extensora", sets: "3x15", vid: "m0O_n_0J0E8" },
-                { name: "Cadeira Flexora", sets: "3x15", vid: "XmEa8B4z9M0" },
-                { name: "Agachamento Cálice", sets: "3x12", vid: "MeIiV7Fv28Y" },
-                { name: "RDL (Stiff) Halteres", sets: "3x12", vid: "9-m_n6Bnd_8" },
-                { name: "Elevação Pélvica", sets: "3x15", vid: "h_M69S1pYSw" }
+            { day: "Quarta", muscles: "Pernas e Máquinas", type: "weight", exercises: [
+                { name: "Leg Press 45°", sets: "3x12" },
+                { name: "Cadeira Extensora", sets: "3x15" },
+                { name: "Cadeira Flexora", sets: "3x15" },
+                { name: "Agachamento Cálice", sets: "3x12" },
+                { name: "RDL (Stiff) com Halteres", sets: "3x12" },
+                { name: "Elevação Pélvica com Halter", sets: "3x15" }
             ]},
             { day: "Quinta", muscles: "Esteira (Cardio)", type: "cardio", exercises: [
-                { name: "Caminhada Inclinada", sets: "30 min", vid: "8iP0nh-9v2E" }
+                { name: "Caminhada Inclinada", sets: "30 min" },
+                { name: "Mobilidade Articular", sets: "5 min" }
             ]},
             { day: "Sexta", muscles: "Full Body", type: "weight", exercises: [
-                { name: "Supino Inclinado", sets: "3x12", vid: "8iP0nh-9v2E" },
-                { name: "Remada Serrote", sets: "3x12", vid: "D_O856S-qL0" },
-                { name: "Elevação Frontal", sets: "3x12", vid: "v_74M10f8A8" },
-                { name: "Bíceps Polia", sets: "3x15", vid: "twW2Z4Y9L9I" },
-                { name: "Tríceps Corda", sets: "3x15", vid: "2-LID_Z8-0o" }
+                { name: "Supino Inclinado com Halteres", sets: "3x12" },
+                { name: "Remada Serrote com Halter", sets: "3x12" },
+                { name: "Elevação Frontal", sets: "3x12" },
+                { name: "Rosca Direta na Polia", sets: "3x15" },
+                { name: "Tríceps Corda na Polia", sets: "3x15" }
             ]},
             { day: "Sábado", muscles: "Posterior e Quadríceps", type: "weight", exercises: [
-                { name: "Cadeira Flexora", sets: "4x12", vid: "XmEa8B4z9M0" },
-                { name: "Leg Press 45°", sets: "3x12", vid: "IZxyjW7MPJQ" },
-                { name: "Cadeira Extensora", sets: "3x15", vid: "m0O_n_0J0E8" },
-                { name: "Agachamento Sumô", sets: "3x15", vid: "v_74M10f8A8" },
-                { name: "Gêmeos Sentado", sets: "4x20", vid: "k_q7u-iS9zY" }
+                { name: "Cadeira Flexora", sets: "4x12" },
+                { name: "Leg Press 45°", sets: "3x12" },
+                { name: "Cadeira Extensora", sets: "3x15" },
+                { name: "Agachamento Sumô com Halter", sets: "3x15" },
+                { name: "Gêmeos Sentado", sets: "4x20" }
             ]},
             { day: "Domingo", muscles: "Esteira (Cardio)", type: "cardio", exercises: [
-                { name: "Caminhada Leve", sets: "30 min", vid: "8iP0nh-9v2E" }
+                { name: "Caminhada Leve / Trote", sets: "30 min" }
             ]}
         ];
 
         let currentDayIdx = new Date().getDay() === 0 ? 6 : new Date().getDay() - 1;
-        let completed = JSON.parse(localStorage.getItem('gym_gemini_vFinal_v2') || '{}');
+        let completed = JSON.parse(localStorage.getItem('gym_clean_final_v1') || '{}');
 
         function toggle(day, ex) {
             const key = `${day}-${ex}`;
             completed[key] = !completed[key];
-            localStorage.setItem('gym_gemini_vFinal_v2', JSON.stringify(completed));
+            localStorage.setItem('gym_clean_final_v1', JSON.stringify(completed));
             render();
         }
 
         function resetDay() {
-            if(confirm("Deseja resetar o progresso de hoje?")) {
+            if(confirm("Deseja limpar o progresso de hoje?")) {
                 Object.keys(completed).forEach(key => {
                     if(key.startsWith(currentDayIdx + '-')) delete completed[key];
                 });
-                localStorage.setItem('gym_gemini_vFinal_v2', JSON.stringify(completed));
+                localStorage.setItem('gym_clean_final_v1', JSON.stringify(completed));
                 render();
             }
-        }
-
-        function openVideo(id, title) {
-            const modal = document.getElementById('modal');
-            const iframe = document.getElementById('player');
-            const ytLink = document.getElementById('yt-link');
-            document.getElementById('m-title').innerText = title;
-            // Usando parâmetros para forçar a melhor compatibilidade
-            iframe.src = `https://www.youtube.com/embed/${id}?autoplay=1&rel=0&modestbranding=1&controls=1`;
-            ytLink.href = `https://www.youtube.com/watch?v=${id}`;
-            modal.classList.remove('hidden');
-        }
-
-        function closeVideo() {
-            document.getElementById('modal').classList.add('hidden');
-            document.getElementById('player').src = "";
         }
 
         function render() {
@@ -153,55 +144,58 @@
             const done = exs.filter((_, i) => completed[`${currentDayIdx}-${i}`]).length;
             const pct = Math.round((done / exs.length) * 100);
 
+            // Lógica para remover o "-feira" de Sábado e Domingo
+            const formattedDayName = (day.day === "Sábado" || day.day === "Domingo") 
+                ? day.day 
+                : `${day.day}-feira`;
+
             document.getElementById('app').innerHTML = `
-                <!-- HEADER - CINZA ESCURO GEMINI -->
-                <header class="p-8 sticky top-0 z-20 bg-gemini-bg/95 backdrop-blur-lg rounded-b-[3rem] border-b border-gemini-border">
-                    <div class="flex justify-between items-center mb-6">
+                <!-- HEADER -->
+                <header class="p-8 sticky top-0 z-20 bg-gemini-bg/95 backdrop-blur-md rounded-b-[2.5rem] border-b border-gemini-border">
+                    <div class="flex justify-between items-center mb-6 pt-2">
                         <div>
                             <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500 mb-1">${SUB_TITLE}</p>
-                            <h1 class="text-3xl font-black italic tracking-tighter text-white leading-none">${APP_NAME}</h1>
+                            <h1 class="text-2xl font-black italic tracking-tighter text-white leading-none">${APP_NAME}</h1>
                         </div>
-                        <button onclick="resetDay()" class="w-12 h-12 flex items-center justify-center bg-gemini-surface border border-gemini-border rounded-2xl text-slate-400 active:scale-90 transition-all shadow-lg">
-                            <i data-lucide="refresh-cw" class="w-6 h-6"></i>
+                        <button onclick="resetDay()" class="w-10 h-10 flex items-center justify-center bg-gemini-surface border border-gemini-border rounded-xl text-slate-400 active:scale-90 transition-all">
+                            <i data-lucide="refresh-cw" class="w-5 h-5"></i>
                         </button>
                     </div>
                     
-                    <div class="bg-gemini-surface p-5 rounded-3xl border border-gemini-border shadow-inner">
-                        <div class="flex justify-between text-[10px] font-black mb-3 uppercase tracking-[0.1em] text-slate-400">
-                            <span>Sessão Atual</span>
-                            <span>${pct}% Completo</span>
+                    <div class="bg-gemini-surface p-4 rounded-2xl border border-gemini-border shadow-inner">
+                        <div class="flex justify-between text-[10px] font-black mb-2 uppercase text-slate-400">
+                            <span>Conclusão</span>
+                            <span>${pct}%</span>
                         </div>
-                        <div class="w-full bg-gemini-bg h-2.5 rounded-full overflow-hidden p-[2px]">
-                            <div class="bg-indigo-500 h-full rounded-full transition-all duration-1000 ease-out shadow-[0_0_10px_rgba(99,102,241,0.5)]" style="width: ${pct}%"></div>
+                        <div class="w-full bg-gemini-bg h-1.5 rounded-full overflow-hidden">
+                            <div class="bg-indigo-500 h-full transition-all duration-700" style="width: ${pct}%"></div>
                         </div>
                     </div>
                 </header>
 
-                <!-- SELETOR DE DIAS - CORES SOMENTE AQUI -->
-                <div class="flex overflow-x-auto gap-4 p-6 no-scrollbar snap-x">
+                <!-- SELETOR DE DIAS -->
+                <div class="flex overflow-x-auto gap-3 p-6 no-scrollbar snap-x">
                     ${workoutData.map((d, i) => {
                         const isActive = currentDayIdx === i;
                         const colorClass = d.type === 'cardio' ? 'btn-active-cardio' : 'btn-active-weight';
                         return `
-                        <button onclick="currentDayIdx=${i}; render()" class="flex-shrink-0 snap-start px-8 py-3 rounded-2xl text-[11px] font-black border-2 transition-all duration-300 ${isActive ? colorClass : 'bg-gemini-surface text-slate-500 border-gemini-border'}">
+                        <button onclick="currentDayIdx=${i}; render()" class="flex-shrink-0 snap-start px-6 py-2.5 rounded-full text-[10px] font-black border transition-all ${isActive ? colorClass : 'bg-gemini-surface text-slate-500 border-gemini-border'}">
                             ${d.day.toUpperCase()}
                         </button>
                         `;
                     }).join('')}
                 </div>
 
-                <!-- CARDS DE EXERCÍCIOS - CINZA GEMINI -->
+                <!-- MAIN -->
                 <main class="px-6 space-y-4">
-                    <div class="bg-gemini-surface p-6 rounded-[2.5rem] border border-gemini-border flex justify-between items-center relative overflow-hidden transition-all duration-500">
-                        <!-- Detalhe lateral colorido para indicar tipo -->
-                        <div class="absolute left-0 top-0 bottom-0 w-2.5 ${day.type === 'cardio' ? 'bg-orange-500' : 'bg-indigo-600'}"></div>
-                        
+                    <div class="bg-gemini-surface p-6 rounded-[2.2rem] border border-gemini-border flex justify-between items-center relative overflow-hidden shadow-lg">
+                        <div class="absolute left-0 top-0 bottom-0 w-2 ${day.type === 'cardio' ? 'bg-orange-500' : 'bg-indigo-600'}"></div>
                         <div>
-                            <h2 class="text-2xl font-black text-white leading-tight tracking-tight">${day.day}-feira</h2>
-                            <p class="text-[11px] font-bold text-slate-400 uppercase tracking-[0.15em] mt-2">${day.muscles}</p>
+                            <h2 class="text-xl font-black text-white tracking-tight leading-tight">${formattedDayName}</h2>
+                            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">${day.muscles}</p>
                         </div>
-                        <div class="text-slate-700/50">
-                             <i data-lucide="${day.type === 'cardio' ? 'heart-pulse' : 'dumbbell'}" class="w-10 h-10"></i>
+                        <div class="text-slate-700">
+                             <i data-lucide="${day.type === 'cardio' ? 'heart-pulse' : 'dumbbell'}" class="w-8 h-8"></i>
                         </div>
                     </div>
 
@@ -209,51 +203,25 @@
                         ${exs.map((ex, i) => {
                             const isDone = completed[`${currentDayIdx}-${i}`];
                             return `
-                                <div class="card-anim flex items-center justify-between p-5 rounded-[2.5rem] border transition-all duration-300 ${isDone ? 'bg-emerald-950/20 border-emerald-900/30 opacity-60 scale-95' : 'bg-gemini-surface border-gemini-border shadow-xl'}">
-                                    <div class="flex items-center gap-5 flex-1" onclick="toggle(${currentDayIdx}, ${i})">
-                                        <div class="w-11 h-11 rounded-full flex items-center justify-center transition-all duration-500 ${isDone ? 'bg-emerald-600 text-white shadow-[0_0_15px_rgba(16,185,129,0.3)]' : 'bg-gemini-bg border-2 border-gemini-border text-transparent'}">
-                                            <i data-lucide="check" class="w-6 h-6" stroke-width="4"></i>
-                                        </div>
-                                        <div>
-                                            <h3 class="font-bold text-base ${isDone ? 'text-slate-600 line-through' : 'text-slate-100'} leading-tight tracking-tight">${ex.name}</h3>
-                                            <div class="mt-2 inline-flex items-center px-3 py-1 rounded-full bg-gemini-bg border border-gemini-border">
-                                                <span class="text-[10px] font-black text-indigo-400 uppercase tracking-tighter">${ex.sets}</span>
-                                            </div>
-                                        </div>
+                                <div onclick="toggle(${currentDayIdx}, ${i})" class="card-tap flex items-center gap-5 p-5 rounded-[2rem] border transition-all ${isDone ? 'bg-emerald-950/20 border-emerald-900/30 opacity-50 scale-[0.98]' : 'bg-gemini-surface border-gemini-border shadow-xl'}">
+                                    <div class="w-10 h-10 rounded-full flex-shrink-0 flex items-center justify-center transition-all ${isDone ? 'bg-emerald-600 text-white' : 'bg-gemini-bg border-2 border-gemini-border text-transparent'}">
+                                        <i data-lucide="check" class="w-5 h-5" stroke-width="4"></i>
                                     </div>
-                                    <button onclick="openVideo('${ex.vid}', '${ex.name}')" class="w-12 h-12 flex items-center justify-center text-indigo-400 bg-indigo-500/10 border border-indigo-500/20 rounded-2xl active:scale-90 transition-all shadow-sm">
-                                        <i data-lucide="play" class="w-6 h-6" fill="currentColor"></i>
-                                    </button>
+                                    <div class="flex-1">
+                                        <h3 class="font-bold text-base ${isDone ? 'text-slate-600 line-through' : 'text-slate-200'}">${ex.name}</h3>
+                                        <span class="text-[10px] font-black text-slate-400 uppercase mt-1 inline-block">${ex.sets}</span>
+                                    </div>
                                 </div>
                             `;
                         }).join('')}
                     </div>
                 </main>
 
-                <!-- MODAL DE VÍDEO - DESIGN CINZA -->
-                <div id="modal" class="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/95 hidden backdrop-blur-lg">
-                    <div class="bg-gemini-surface w-full max-w-lg rounded-[3rem] overflow-hidden border border-gemini-border relative shadow-2xl animate-in zoom-in-95 duration-300">
-                        <button onclick="closeVideo()" class="absolute top-5 right-5 z-20 p-3 bg-black/60 text-white rounded-full active:scale-90 transition-all backdrop-blur-md">
-                            <i data-lucide="x" class="w-6 h-6"></i>
-                        </button>
-                        <div class="aspect-video bg-black shadow-inner">
-                            <iframe id="player" width="100%" height="100%" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                        </div>
-                        <div class="p-8 text-center bg-gradient-to-b from-gemini-surface to-gemini-bg">
-                            <h3 id="m-title" class="text-2xl font-black text-white mb-6 tracking-tight"></h3>
-                            <a id="yt-link" target="_blank" class="w-full flex items-center justify-center gap-3 text-xs font-black text-white bg-indigo-600 hover:bg-indigo-500 px-8 py-4 rounded-2xl uppercase tracking-[0.2em] active:scale-95 transition-all shadow-lg shadow-indigo-600/20 border border-indigo-500/30">
-                                <i data-lucide="external-link" class="w-5 h-5"></i> Abrir no YouTube
-                            </a>
-                            <p class="text-[10px] text-slate-500 mt-5 uppercase font-bold tracking-widest opacity-60">Sempre execute com postura controlada</p>
-                        </div>
-                    </div>
-                </div>
-
                 <!-- FOOTER -->
                 <footer class="fixed bottom-8 left-0 right-0 flex justify-center pointer-events-none px-6">
-                    <div class="bg-gemini-surface/90 text-slate-500 px-10 py-4 rounded-full text-[10px] font-black tracking-[0.4em] uppercase border border-gemini-border backdrop-blur-xl shadow-2xl flex items-center gap-4">
+                    <div class="bg-gemini-surface/90 text-slate-400 px-8 py-3 rounded-full text-[9px] font-black tracking-[0.4em] uppercase border border-gemini-border backdrop-blur-lg shadow-2xl flex items-center gap-3">
                         <i data-lucide="zap" class="w-4 h-4 text-indigo-500 fill-indigo-500"></i>
-                        PRO TRAINING • GEMINI UI
+                        PRO WORKOUT • CLEAN
                     </div>
                 </footer>
             `;
