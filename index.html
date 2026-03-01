@@ -6,19 +6,20 @@
     
     <title>TREINO EM CASA</title>
 
-    <!-- CONFIGURAÇÕES DE APP (MODO TELA CHEIA) -->
+    <!-- CONFIGURAÇÕES DE WEB APP PARA IPHONE -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Treino">
+    <meta name="apple-mobile-web-app-title" content="MEU PLANO">
+    <meta name="mobile-web-app-capable" content="yes">
 
-    <!-- ÍCONE PNG ULTRA-LEVE (PESO AZUL NO FUNDO PRETO) -->
-    <link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJAAAACQCAYAAADnRuK4AAAACXBIWXMAAAsTAAALEwEAmpwYAAABJGlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDAgNzkuMTYwNDUxLCAyMDE3LzA1LzA2LTAxOjA4OjIxICAgICAgICAiPgogPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIi8+CiA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgo8P3hwYWNrZXQgZW5kPSJ3Ij8+U5UEpQAAAG1JREFUeJzt07ERACAIBEBy/609mIDYidmByZ+9CwiXqloAALBnd+8BAF9mDwD4NHsAwKfZAwA+zR4A8Gn2AIBPswcAfJo9AODT7AEAn2YPAPg0ewDAp9kDAD7NHgDwafYAgE+zBwB8mj0A4NPsAQDfltoAnisN9XWvE6kAAAAASUVORK5CYII=">
-
+    <!-- ÍCONE DE ALTA PRIORIDADE (PESO AZUL EM FUNDO ESCURO) -->
+    <link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKAAAACgCAYAAACZgo3fAAAACXBIWXMAAAsTAAALEwEAmpwYAAABX0lEQVR4nO3dQYpCQRBA0Zp7/6M5iYgbNx6iYCEmCH5vBeGf7ulX9YvS9fMAAAAAAHAb9Xp903Xdk7Ztr7Vt29u23e31et9er/8m6/X6ZpZl99u2vdG27X7btm9t2z5p2/Zp13VPu6779vK5b+v1erPb7Z7mef6k67ovbdteS9P0Wpqm19M0vd627Y2u6653Xfe067rvb7z2r9M0vToYDJ6naXo1TdOraZpeS9P0Wpqm19M0vXp6evo8TdOri8Xi6fX19ZPr6+vT6+vrs8vXfP7+7zR8n6Y/f39y8ufvT09OTp4PBoOnp6enT8/Pz59fXl7+f8f/x9v/H6vVaqPT6Zz0er1v3W7378/N8/xplmX32ra9lmXZvSzL7v8m8zy/v7m5uTUYDB5fXFycbDabm77v7/u+v9V13VfXdQfXdcda645aa4+6rjvuuu773W73XpZl97Msux+LxX9W67/N5U/S9Xq9PxgM7vV6vW9939/0fX/X9/3Nvu9vdrvd067rnizXf5Pr6+snfdf96Lrum+Xv5fJn83+0/GMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADf8S++l6pX0wP9XQAAAABJRU5ErkJggg==">
+    
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800;900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
-            theme: { extend: { colors: { 'gem-bg': '#131314', 'gem-card': '#1e1f20', 'gem-border': '#333537' } } }
+            theme: { extend: { colors: { 'gemini-bg': '#131314', 'gemini-card': '#1e1f20', 'gemini-border': '#333537' } } }
         }
     </script>
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -46,17 +47,17 @@
             { day: "Domingo", muscles: "Esteira (Cardio)", type: "cardio", exercises: [{ name: "Caminhada Leve / Trote", sets: "30 min" }]}
         ];
         let currentDayIdx = new Date().getDay() === 0 ? 6 : new Date().getDay() - 1;
-        let completed = JSON.parse(localStorage.getItem('gym_vFinal_PWA_fixed_v7') || '{}');
+        let completed = JSON.parse(localStorage.getItem('gym_vFinal_PWA_fixed_v8') || '{}');
         function toggle(day, ex) {
             const key = `${day}-${ex}`;
             completed[key] = !completed[key];
-            localStorage.setItem('gym_vFinal_PWA_fixed_v7', JSON.stringify(completed));
+            localStorage.setItem('gym_vFinal_PWA_fixed_v8', JSON.stringify(completed));
             render();
         }
         function resetDay() {
             if(confirm("Limpar o progresso de hoje?")) {
                 Object.keys(completed).forEach(key => { if(key.startsWith(currentDayIdx + '-')) delete completed[key]; });
-                localStorage.setItem('gym_vFinal_PWA_fixed_v7', JSON.stringify(completed));
+                localStorage.setItem('gym_vFinal_PWA_fixed_v8', JSON.stringify(completed));
                 render();
             }
         }
@@ -67,14 +68,14 @@
             const pct = Math.round((done / exs.length) * 100);
             const formattedDayName = (day.day === "Sábado" || day.day === "Domingo") ? day.day : `${day.day}-feira`;
             document.getElementById('app').innerHTML = `
-                <header class="p-8 sticky top-0 z-20 bg-gem-bg/95 backdrop-blur-md rounded-b-[2.5rem] border-b border-gem-border">
+                <header class="p-8 sticky top-0 z-20 bg-gemini-bg/95 backdrop-blur-md rounded-b-[2.5rem] border-b border-gemini-border shadow-2xl">
                     <div class="flex justify-between items-center mb-6 pt-2">
                         <div><p class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500 mb-1">${SUB_TITLE}</p>
                         <h1 class="text-2xl font-black italic tracking-tighter text-white leading-none">${APP_NAME}</h1></div>
-                        <button onclick="resetDay()" class="w-10 h-10 flex items-center justify-center bg-gem-card border border-gem-border rounded-xl text-slate-400 active:scale-90 transition-all"><i data-lucide="refresh-cw" class="w-5 h-5"></i></button>
+                        <button onclick="resetDay()" class="w-10 h-10 flex items-center justify-center bg-gemini-card border border-gemini-border rounded-xl text-slate-400 active:scale-90 transition-all"><i data-lucide="refresh-cw" class="w-5 h-5"></i></button>
                     </div>
-                    <div class="bg-gem-card p-4 rounded-2xl border border-gem-border shadow-inner text-center">
-                        <div class="w-full bg-gem-bg h-1.5 rounded-full overflow-hidden mb-1"><div class="bg-indigo-500 h-full transition-all duration-1000" style="width: ${pct}%"></div></div>
+                    <div class="bg-gemini-card p-4 rounded-2xl border border-gemini-border shadow-inner text-center">
+                        <div class="w-full bg-gemini-bg h-1.5 rounded-full overflow-hidden mb-1"><div class="bg-indigo-500 h-full transition-all duration-1000 shadow-indigo-500/30 shadow-md" style="width: ${pct}%"></div></div>
                         <span class="text-[9px] font-black uppercase text-slate-500 tracking-widest">${pct}% CONCLUÍDO</span>
                     </div>
                 </header>
@@ -82,11 +83,11 @@
                     ${workoutData.map((d, i) => {
                         const isActive = currentDayIdx === i;
                         const colorClass = d.type === 'cardio' ? 'btn-active-cardio' : 'btn-active-weight';
-                        return `<button onclick="currentDayIdx=${i}; render()" class="flex-shrink-0 snap-start px-6 py-2.5 rounded-full text-[10px] font-black border transition-all ${isActive ? colorClass : 'bg-gem-card text-slate-500 border-gem-border'}">${d.day.toUpperCase()}</button>`;
+                        return `<button onclick="currentDayIdx=${i}; render()" class="flex-shrink-0 snap-start px-6 py-2.5 rounded-full text-[10px] font-black border transition-all ${isActive ? colorClass : 'bg-gemini-card text-slate-500 border-gemini-border'}">${d.day.toUpperCase()}</button>`;
                     }).join('')}
                 </div>
                 <main class="px-6 space-y-4">
-                    <div class="bg-gem-card p-6 rounded-[2.2rem] border border-gem-border flex justify-between items-center relative overflow-hidden shadow-lg">
+                    <div class="bg-gemini-card p-6 rounded-[2.2rem] border border-gemini-border flex justify-between items-center relative overflow-hidden shadow-lg">
                         <div class="absolute left-0 top-0 bottom-0 w-2.5 ${day.type === 'cardio' ? 'bg-orange-500' : 'bg-indigo-600'}"></div>
                         <div><h2 class="text-xl font-black text-white tracking-tight leading-tight">${formattedDayName}</h2><p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">${day.muscles}</p></div>
                         <div class="text-slate-700/50"><i data-lucide="${day.type === 'cardio' ? 'heart-pulse' : 'dumbbell'}" class="w-10 h-10"></i></div>
@@ -94,15 +95,15 @@
                     <div class="space-y-3 pb-24">
                         ${exs.map((ex, i) => {
                             const isDone = completed[`${currentDayIdx}-${i}`];
-                            return `<div onclick="toggle(${currentDayIdx}, ${i})" class="card-tap flex items-center gap-5 p-5 rounded-[2.2rem] border transition-all duration-300 ${isDone ? 'bg-emerald-950/20 border-emerald-900/30 opacity-50 scale-[0.98]' : 'bg-gem-card border-gem-border shadow-xl'}">
-                                <div class="w-11 h-11 rounded-full flex-shrink-0 flex items-center justify-center transition-all ${isDone ? 'bg-emerald-600 text-white shadow-lg' : 'bg-gem-bg border-2 border-gem-border text-transparent'}"><i data-lucide="check" class="w-5 h-5" stroke-width="4"></i></div>
+                            return `<div onclick="toggle(${currentDayIdx}, ${i})" class="card-tap flex items-center gap-5 p-5 rounded-[2.2rem] border transition-all duration-300 ${isDone ? 'bg-emerald-950/20 border-emerald-900/30 opacity-50 scale-[0.98]' : 'bg-gemini-card border-gemini-border shadow-xl'}">
+                                <div class="w-11 h-11 rounded-full flex-shrink-0 flex items-center justify-center transition-all ${isDone ? 'bg-emerald-600 text-white shadow-lg' : 'bg-gemini-bg border-2 border-gemini-border text-transparent'}"><i data-lucide="check" class="w-5 h-5" stroke-width="4"></i></div>
                                 <div class="flex-1"><h3 class="font-bold text-base ${isDone ? 'text-slate-600 line-through font-normal' : 'text-slate-200'}">${ex.name}</h3><span class="text-[10px] font-black text-indigo-400/80 uppercase mt-1 inline-block">${ex.sets}</span></div>
                             </div>`;
                         }).join('')}
                     </div>
                 </main>
                 <footer class="fixed bottom-8 left-0 right-0 flex justify-center pointer-events-none px-6">
-                    <div class="bg-gem-card/90 text-slate-400 px-8 py-3 rounded-full text-[9px] font-black tracking-[0.4em] uppercase border border-gem-border backdrop-blur-lg shadow-2xl flex items-center gap-3"><i data-lucide="dumbbell" class="w-4 h-4 text-indigo-500 fill-indigo-500"></i>PRO WORKOUT • V7</div>
+                    <div class="bg-gemini-card/90 text-slate-400 px-8 py-3 rounded-full text-[9px] font-black tracking-[0.4em] uppercase border border-gemini-border backdrop-blur-lg shadow-2xl flex items-center gap-3"><i data-lucide="dumbbell" class="w-4 h-4 text-indigo-500 fill-indigo-500"></i>TREINO PRO • V8</div>
                 </footer>
             `;
             lucide.createIcons();
