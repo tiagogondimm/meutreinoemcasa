@@ -1,115 +1,233 @@
 <!DOCTYPE html>
-<html lang="pt-pt">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     
-    <!-- NOVO NOME (Se falhar, aparecerá um P) -->
-    <title>PRO TREINO</title>
+    <!-- TÍTULO QUE GERA O ÍCONE "T" -->
+    <title>TREINO EM CASA</title>
 
-    <!-- CONFIGURAÇÕES DE APLICATIVO -->
+    <!-- CONFIGURAÇÕES PARA ABRIR SEM AS BARRAS DO SAFARI -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="PRO TREINO">
+    <meta name="apple-mobile-web-app-title" content="TREINO">
 
-    <!-- ÍCONE PNG RE-GERADO (PESO AZUL EM FUNDO PRETO SÓLIDO) -->
-    <link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKAAAACgCAYAAACZgo3fAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAABX0lEQVR4nO3dQYpCQRBA0Zp7/6M5iYgbNx6iYCEmCH5vBeGf7ulX9YvS9fMAAAAAAHAb9Xp903Xdk7Ztr7Vt29u23e31et9er/8m6/X6ZpZl99u2vdG27X7btm9t2z5p2/Zp13VPu6779vK5b+v1erPb7Z7mef6k67ovbdteS9P0Wpqm19M0vd627Y2u6653Xfe067rvb7z2r9M0vToYDJ6naXo1TdOraZpeS9P0Wpqm19M0vXp6evo8TdOri8Xi6fX19ZPr6+vT6+vrs8vXfP7+7zR8n6Y/f39y8ufvT09OTp4PBoOnp6enT8/Pz59fXl7+f8f/x9v/H6vVaqPT6Zz0er1v3W7378/N8/xplmX32ra9lmXZvSzL7v8m8zy/v7m5uTUYDB5fXFycbDabm77v7/u+v9V13VfXdQfXdcda645aa4+6rjvuuu773W73XpZl97Msux+LxX9W67/N5U/S9Xq9PxgM7vV6vW9939/0fX/X9/3Nvu9vdrvd067rnizXf5Pr6+snfdf96Lrum+Xv5fJn83+0/GMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADf8S++l6pX0wP9XQAAAABJRU5ErkJggg==">
-
-    <!-- Estilos e Fontes -->
+    <!-- Google Fonts Poppins -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
-            theme: { extend: { colors: { 'gem-bg': '#131314', 'gem-card': '#1e1f20', 'gem-border': '#333537' } } }
+            theme: {
+                extend: {
+                    colors: {
+                        'gemini-bg': '#131314',
+                        'gemini-surface': '#1e1f20',
+                        'gemini-border': '#333537',
+                    }
+                }
+            }
         }
     </script>
+    
     <script src="https://unpkg.com/lucide@latest"></script>
+
     <style>
-        body { font-family: 'Poppins', sans-serif; background-color: #131314; color: #e3e3e3; -webkit-tap-highlight-color: transparent; }
+        body { 
+            font-family: 'Poppins', sans-serif;
+            background-color: #131314;
+            color: #e3e3e3;
+            -webkit-tap-highlight-color: transparent;
+        }
+
         .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        .btn-active-weight {
+            background-color: #6366f1 !important;
+            color: white !important;
+            box-shadow: 0 8px 15px -5px rgba(99, 102, 241, 0.5);
+            border: none !important;
+        }
+
+        .btn-active-cardio {
+            background-color: #f97316 !important;
+            color: white !important;
+            box-shadow: 0 8px 15px -5px rgba(249, 115, 22, 0.5);
+            border: none !important;
+        }
+
         header { padding-top: env(safe-area-inset-top); }
-        .btn-active-weight { background-color: #6366f1 !important; color: white !important; box-shadow: 0 10px 20px -5px rgba(99, 102, 241, 0.4); border: none !important; }
-        .btn-active-cardio { background-color: #f97316 !important; color: white !important; box-shadow: 0 10px 20px -5px rgba(249, 115, 22, 0.4); border: none !important; }
-        .card-tap { transition: transform 0.1s ease; }
-        .card-tap:active { transform: scale(0.98); }
+
+        .card-tap {
+            transition: transform 0.1s ease, background-color 0.2s ease;
+        }
+        .card-tap:active {
+            transform: scale(0.98);
+        }
     </style>
 </head>
 <body class="pb-32">
     <div id="app"></div>
+
     <script>
-        const APP_NAME = "PRO TREINO";
+        const APP_NAME = "TREINO EM CASA";
         const SUB_TITLE = "ACADEMIA DO PRÉDIO";
+
         const workoutData = [
-            { day: "Segunda", muscles: "Peito, Ombro e Tríceps", type: "weight", exercises: [{ name: "Supino Reto com Halteres", sets: "3x12" }, { name: "Crucifixo com Halteres", sets: "3x15" }, { name: "Desenvolvimento com Halteres", sets: "3x10" }, { name: "Elevação Lateral com Halteres", sets: "3x15" }, { name: "Tríceps Pulley na Polia", sets: "3x12" }, { name: "Tríceps Francês com Halter", sets: "3x12" }]},
-            { day: "Terça", muscles: "Costas e Bíceps", type: "weight", exercises: [{ name: "Pulldown na Polia", sets: "3x12" }, { name: "Face Pull na Polia", sets: "3x15" }, { name: "Puxada Baixa na Polia", sets: "3x12" }, { name: "Remada Curvada com Halteres", sets: "4x10" }, { name: "Rosca Martelo com Halteres", sets: "3x12" }, { name: "Rosca Direta com Halteres", sets: "3x12" }]},
-            { day: "Quarta", muscles: "Pernas e Máquinas", type: "weight", exercises: [{ name: "Leg Press 45°", sets: "3x12" }, { name: "Cadeira Extensora", sets: "3x15" }, { name: "Cadeira Flexora", sets: "3x15" }, { name: "Agachamento Cálice", sets: "3x12" }, { name: "RDL (Stiff) com Halteres", sets: "3x12" }, { name: "Elevação Pélvica com Halter", sets: "3x15" }]},
-            { day: "Quinta", muscles: "Esteira (Cardio)", type: "cardio", exercises: [{ name: "Caminhada Inclinada", sets: "30 min" }, { name: "Mobilidade Articular", sets: "5 min" }]},
-            { day: "Sexta", muscles: "Full Body", type: "weight", exercises: [{ name: "Supino Inclinado com Halteres", sets: "3x12" }, { name: "Remada Serrote com Halter", sets: "3x12" }, { name: "Elevação Frontal", sets: "3x12" }, { name: "Rosca Direta na Polia", sets: "3x15" }, { name: "Tríceps Corda na Polia", sets: "3x15" }]},
-            { day: "Sábado", muscles: "Posterior e Quadríceps", type: "weight", exercises: [{ name: "Cadeira Flexora", sets: "4x12" }, { name: "Leg Press 45°", sets: "3x12" }, { name: "Cadeira Extensora", sets: "3x15" }, { name: "Agachamento Sumô com Halter", sets: "3x15" }, { name: "Gêmeos Sentado", sets: "4x20" }]},
-            { day: "Domingo", muscles: "Esteira (Cardio)", type: "cardio", exercises: [{ name: "Caminhada Leve / Trote", sets: "30 min" }]}
+            { day: "Segunda", muscles: "Peito, Ombro e Tríceps", type: "weight", exercises: [
+                { name: "Supino Reto com Halteres", sets: "3x12" },
+                { name: "Crucifixo com Halteres", sets: "3x15" },
+                { name: "Desenvolvimento com Halteres", sets: "3x10" },
+                { name: "Elevação Lateral com Halteres", sets: "3x15" },
+                { name: "Tríceps Pulley na Polia", sets: "3x12" },
+                { name: "Tríceps Francês com Halter", sets: "3x12" }
+            ]},
+            { day: "Terça", muscles: "Costas e Bíceps", type: "weight", exercises: [
+                { name: "Pulldown na Polia", sets: "3x12" },
+                { name: "Face Pull na Polia", sets: "3x15" },
+                { name: "Puxada Baixa na Polia", sets: "3x12" },
+                { name: "Remada Curvada com Halteres", sets: "4x10" },
+                { name: "Rosca Martelo com Halteres", sets: "3x12" },
+                { name: "Rosca Direta com Halteres", sets: "3x12" }
+            ]},
+            { day: "Quarta", muscles: "Pernas e Máquinas", type: "weight", exercises: [
+                { name: "Leg Press 45°", sets: "3x12" },
+                { name: "Cadeira Extensora", sets: "3x15" },
+                { name: "Cadeira Flexora", sets: "3x15" },
+                { name: "Agachamento Cálice", sets: "3x12" },
+                { name: "RDL (Stiff) com Halteres", sets: "3x12" },
+                { name: "Elevação Pélvica com Halter", sets: "3x15" }
+            ]},
+            { day: "Quinta", muscles: "Esteira (Cardio)", type: "cardio", exercises: [
+                { name: "Caminhada Inclinada", sets: "30 min" },
+                { name: "Mobilidade Articular", sets: "5 min" }
+            ]},
+            { day: "Sexta", muscles: "Full Body", type: "weight", exercises: [
+                { name: "Supino Inclinado com Halteres", sets: "3x12" },
+                { name: "Remada Serrote com Halter", sets: "3x12" },
+                { name: "Elevação Frontal", sets: "3x12" },
+                { name: "Rosca Direta na Polia", sets: "3x15" },
+                { name: "Tríceps Corda na Polia", sets: "3x15" }
+            ]},
+            { day: "Sábado", muscles: "Posterior e Quadríceps", type: "weight", exercises: [
+                { name: "Cadeira Flexora", sets: "4x12" },
+                { name: "Leg Press 45°", sets: "3x12" },
+                { name: "Cadeira Extensora", sets: "3x15" },
+                { name: "Agachamento Sumô com Halter", sets: "3x15" },
+                { name: "Gêmeos Sentado", sets: "4x20" }
+            ]},
+            { day: "Domingo", muscles: "Esteira (Cardio)", type: "cardio", exercises: [
+                { name: "Caminhada Leve / Trote", sets: "30 min" }
+            ]}
         ];
+
         let currentDayIdx = new Date().getDay() === 0 ? 6 : new Date().getDay() - 1;
-        let completed = JSON.parse(localStorage.getItem('gym_vFinal_PWA_fixed_v9') || '{}');
+        let completed = JSON.parse(localStorage.getItem('gym_vFinal_clean_T') || '{}');
+
         function toggle(day, ex) {
             const key = `${day}-${ex}`;
             completed[key] = !completed[key];
-            localStorage.setItem('gym_vFinal_PWA_fixed_v9', JSON.stringify(completed));
+            localStorage.setItem('gym_vFinal_clean_T', JSON.stringify(completed));
             render();
         }
+
         function resetDay() {
-            if(confirm("Limpar o progresso de hoje?")) {
-                Object.keys(completed).forEach(key => { if(key.startsWith(currentDayIdx + '-')) delete completed[key]; });
-                localStorage.setItem('gym_vFinal_PWA_fixed_v9', JSON.stringify(completed));
+            if(confirm("Deseja limpar o progresso de hoje?")) {
+                Object.keys(completed).forEach(key => {
+                    if(key.startsWith(currentDayIdx + '-')) delete completed[key];
+                });
+                localStorage.setItem('gym_vFinal_clean_T', JSON.stringify(completed));
                 render();
             }
         }
+
         function render() {
             const day = workoutData[currentDayIdx];
             const exs = day.exercises;
             const done = exs.filter((_, i) => completed[`${currentDayIdx}-${i}`]).length;
             const pct = Math.round((done / exs.length) * 100);
-            const formattedDayName = (day.day === "Sábado" || day.day === "Domingo") ? day.day : `${day.day}-feira`;
+
+            const formattedDayName = (day.day === "Sábado" || day.day === "Domingo") 
+                ? day.day 
+                : `${day.day}-feira`;
+
             document.getElementById('app').innerHTML = `
-                <header class="p-8 sticky top-0 z-20 bg-gem-bg/95 backdrop-blur-md rounded-b-[2.5rem] border-b border-gem-border">
+                <header class="p-8 sticky top-0 z-20 bg-gemini-bg/95 backdrop-blur-md rounded-b-[2.5rem] border-b border-gemini-border shadow-2xl">
                     <div class="flex justify-between items-center mb-6 pt-2">
-                        <div><p class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500 mb-1">${SUB_TITLE}</p>
-                        <h1 class="text-2xl font-black italic tracking-tighter text-white leading-none">${APP_NAME}</h1></div>
-                        <button onclick="resetDay()" class="w-10 h-10 flex items-center justify-center bg-gem-card border border-gem-border rounded-xl text-slate-400 active:scale-90 transition-all shadow-lg"><i data-lucide="refresh-cw" class="w-5 h-5"></i></button>
+                        <div>
+                            <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500 mb-1">${SUB_TITLE}</p>
+                            <h1 class="text-2xl font-black italic tracking-tighter text-white leading-none">${APP_NAME}</h1>
+                        </div>
+                        <button onclick="resetDay()" class="w-10 h-10 flex items-center justify-center bg-gemini-surface border border-gemini-border rounded-xl text-slate-400 active:scale-90 transition-all">
+                            <i data-lucide="refresh-cw" class="w-5 h-5"></i>
+                        </button>
                     </div>
-                    <div class="bg-gem-card p-4 rounded-2xl border border-gem-border shadow-inner text-center">
-                        <div class="w-full bg-gem-bg h-1.5 rounded-full overflow-hidden mb-1"><div class="bg-indigo-500 h-full transition-all duration-1000 shadow-indigo-500/30 shadow-md" style="width: ${pct}%"></div></div>
-                        <span class="text-[9px] font-black uppercase text-slate-500 tracking-widest">${pct}% CONCLUÍDO</span>
+                    
+                    <div class="bg-gemini-surface p-4 rounded-2xl border border-gemini-border shadow-inner">
+                        <div class="flex justify-between text-[10px] font-black mb-2 uppercase text-slate-400">
+                            <span>Conclusão</span>
+                            <span>${pct}%</span>
+                        </div>
+                        <div class="w-full bg-gemini-bg h-1.5 rounded-full overflow-hidden">
+                            <div class="bg-indigo-500 h-full transition-all duration-700 shadow-indigo-500/30 shadow-md" style="width: ${pct}%"></div>
+                        </div>
                     </div>
                 </header>
+
                 <div class="flex overflow-x-auto gap-3 p-6 no-scrollbar snap-x">
                     ${workoutData.map((d, i) => {
                         const isActive = currentDayIdx === i;
                         const colorClass = d.type === 'cardio' ? 'btn-active-cardio' : 'btn-active-weight';
-                        return `<button onclick="currentDayIdx=${i}; render()" class="flex-shrink-0 snap-start px-6 py-2.5 rounded-full text-[10px] font-black border transition-all ${isActive ? colorClass : 'bg-gem-card text-slate-500 border-gem-border'}">${d.day.toUpperCase()}</button>`;
+                        return `
+                        <button onclick="currentDayIdx=${i}; render()" class="flex-shrink-0 snap-start px-6 py-2.5 rounded-full text-[10px] font-black border transition-all ${isActive ? colorClass : 'bg-gemini-surface text-slate-500 border-gemini-border'}">
+                            ${d.day.toUpperCase()}
+                        </button>
+                        `;
                     }).join('')}
                 </div>
+
                 <main class="px-6 space-y-4">
-                    <div class="bg-gem-card p-6 rounded-[2.2rem] border border-gem-border flex justify-between items-center relative overflow-hidden shadow-lg">
+                    <div class="bg-gemini-surface p-6 rounded-[2.2rem] border border-gemini-border flex justify-between items-center relative overflow-hidden shadow-lg transition-all duration-500">
                         <div class="absolute left-0 top-0 bottom-0 w-2.5 ${day.type === 'cardio' ? 'bg-orange-500' : 'bg-indigo-600'}"></div>
-                        <div><h2 class="text-xl font-black text-white tracking-tight leading-tight">${formattedDayName}</h2><p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">${day.muscles}</p></div>
-                        <div class="text-slate-700/50"><i data-lucide="${day.type === 'cardio' ? 'heart-pulse' : 'dumbbell'}" class="w-10 h-10"></i></div>
+                        <div>
+                            <h2 class="text-xl font-black text-white tracking-tight leading-tight">${formattedDayName}</h2>
+                            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">${day.muscles}</p>
+                        </div>
+                        <div class="text-slate-700/50">
+                             <i data-lucide="${day.type === 'cardio' ? 'heart-pulse' : 'dumbbell'}" class="w-10 h-10"></i>
+                        </div>
                     </div>
+
                     <div class="space-y-3 pb-24">
                         ${exs.map((ex, i) => {
                             const isDone = completed[`${currentDayIdx}-${i}`];
-                            return `<div onclick="toggle(${currentDayIdx}, ${i})" class="card-tap flex items-center gap-5 p-5 rounded-[2.2rem] border transition-all duration-300 ${isDone ? 'bg-emerald-950/20 border-emerald-900/30 opacity-50 scale-[0.98]' : 'bg-gem-card border-gem-border shadow-xl'}">
-                                <div class="w-11 h-11 rounded-full flex-shrink-0 flex items-center justify-center transition-all ${isDone ? 'bg-emerald-600 text-white shadow-lg' : 'bg-gem-bg border-2 border-gem-border text-transparent'}"><i data-lucide="check" class="w-5 h-5" stroke-width="4"></i></div>
-                                <div class="flex-1"><h3 class="font-bold text-base ${isDone ? 'text-slate-600 line-through font-normal' : 'text-slate-200'}">${ex.name}</h3><span class="text-[10px] font-black text-indigo-400/80 uppercase mt-1 inline-block">${ex.sets}</span></div>
-                            </div>`;
+                            return `
+                                <div onclick="toggle(${currentDayIdx}, ${i})" class="card-tap flex items-center gap-5 p-5 rounded-[2.2rem] border transition-all duration-300 ${isDone ? 'bg-emerald-950/20 border-emerald-900/30 opacity-50 scale-[0.98]' : 'bg-gemini-surface border-gemini-border shadow-xl'}">
+                                    <div class="w-11 h-11 rounded-full flex-shrink-0 flex items-center justify-center transition-all ${isDone ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-200' : 'bg-gemini-bg border-2 border-gemini-border text-transparent'}">
+                                        <i data-lucide="check" class="w-5 h-5" stroke-width="4"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h3 class="font-bold text-base ${isDone ? 'text-slate-600 line-through font-normal' : 'text-slate-200'} leading-tight">${ex.name}</h3>
+                                        <span class="text-[10px] font-black text-indigo-400/80 uppercase mt-1 inline-block tracking-tighter">${ex.sets}</span>
+                                    </div>
+                                </div>
+                            `;
                         }).join('')}
                     </div>
                 </main>
+
                 <footer class="fixed bottom-8 left-0 right-0 flex justify-center pointer-events-none px-6">
-                    <div class="bg-gem-card/90 text-slate-400 px-8 py-3 rounded-full text-[9px] font-black tracking-[0.4em] uppercase border border-gem-border backdrop-blur-lg shadow-2xl flex items-center gap-3"><i data-lucide="dumbbell" class="w-4 h-4 text-indigo-500 fill-indigo-500"></i>PRO TREINO • V1</div>
+                    <div class="bg-gemini-surface/90 text-slate-400 px-8 py-3 rounded-full text-[9px] font-black tracking-[0.4em] uppercase border border-gemini-border backdrop-blur-lg shadow-2xl flex items-center gap-3">
+                        <i data-lucide="dumbbell" class="w-4 h-4 text-indigo-500 fill-indigo-500"></i>
+                        TREINO EM CASA • CLEAN
+                    </div>
                 </footer>
             `;
             lucide.createIcons();
         }
+
         render();
     </script>
 </body>
