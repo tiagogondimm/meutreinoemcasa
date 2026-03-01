@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Meu Treino Pro - Final</title>
+    <title>Meu Treino</title>
     
+    <!-- ÍCONE PERSONALIZADO PARA TELA DE INÍCIO (iPhone) -->
+    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgwIiBoZWlnaHQ9IjE4MCIgdmlld0JveD0iMCAwIDE4MCAxODAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxODAiIGhlaWdodD0iMTgwIiByeD0iNDAiIGZpbGw9IiMxMzEzMTQiLz4KPHBhdGggZD0iTTUwIDkwSDcwTTExMCA5MEgxMzBNODAgNjBWMTEwTTg1IDYwSDc1TTg1IDExMEg3NU0xMDAgNjBWMTEwTTEwNSA2MEg5NU0xMDUgMTEwSDk1TTcwIDc1SDExMFYxMDVINzBWNzVaIiBzdHJva2U9IiM2MzY2RjEiIHN0cm9rZS13aWR0aD0iOCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+Cjwvc3ZnPgo=">
+
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800;900&display=swap" rel="stylesheet">
     
@@ -37,7 +40,6 @@
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-        /* Estilos dos botões de dia ativos */
         .btn-active-weight {
             background-color: #6366f1 !important;
             color: white !important;
@@ -52,7 +54,6 @@
             border: none !important;
         }
 
-        /* Safe area para iPhones com notch */
         header { padding-top: env(safe-area-inset-top); }
 
         .card-tap {
@@ -119,21 +120,21 @@
         ];
 
         let currentDayIdx = new Date().getDay() === 0 ? 6 : new Date().getDay() - 1;
-        let completed = JSON.parse(localStorage.getItem('gym_clean_final_v1') || '{}');
+        let completed = JSON.parse(localStorage.getItem('gym_clean_final_v2') || '{}');
 
         function toggle(day, ex) {
             const key = `${day}-${ex}`;
             completed[key] = !completed[key];
-            localStorage.setItem('gym_clean_final_v1', JSON.stringify(completed));
+            localStorage.setItem('gym_clean_final_v2', JSON.stringify(completed));
             render();
         }
 
         function resetDay() {
-            if(confirm("Deseja limpar o progresso de hoje?")) {
+            if(confirm("Deseja resetar o progresso de hoje?")) {
                 Object.keys(completed).forEach(key => {
                     if(key.startsWith(currentDayIdx + '-')) delete completed[key];
                 });
-                localStorage.setItem('gym_clean_final_v1', JSON.stringify(completed));
+                localStorage.setItem('gym_clean_final_v2', JSON.stringify(completed));
                 render();
             }
         }
@@ -144,7 +145,6 @@
             const done = exs.filter((_, i) => completed[`${currentDayIdx}-${i}`]).length;
             const pct = Math.round((done / exs.length) * 100);
 
-            // Lógica para remover o "-feira" de Sábado e Domingo
             const formattedDayName = (day.day === "Sábado" || day.day === "Domingo") 
                 ? day.day 
                 : `${day.day}-feira`;
