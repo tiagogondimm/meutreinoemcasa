@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-pt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     
-    <!-- TÍTULO PARA MANTER O ÍCONE "T" -->
+    <!-- TÍTULO PARA MANTER O ÍCONE "T" NO IPHONE -->
     <title>TREINO EM CASA</title>
 
-    <!-- CONFIGURAÇÕES DE WEB APP -->
+    <!-- CONFIGURAÇÕES PARA MODO APP (SEM BARRAS) -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="TREINO">
+    <meta name="apple-mobile-web-app-title" content="Treino Casa">
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -45,7 +45,7 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Margem superior segura para a Ilha Dinâmica */
+        /* Espaçamento para Ilha Dinâmica / Notch */
         .iphone-header {
             padding-top: calc(var(--safe-top) + 1.5rem); 
         }
@@ -76,7 +76,6 @@
 
         .history-card { background: linear-gradient(145deg, #1e1f20, #0a0a0b); }
         
-        /* Ajuste de peso de fonte para parecer mais Apple */
         h1, h2, h3 { letter-spacing: -0.02em; }
     </style>
 </head>
@@ -104,17 +103,16 @@
                 { name: "Rosca Martelo Sentado", sets: "3x12" }, 
                 { name: "Rosca Direta Sentado (Banco 45°)", sets: "3x12" }
             ]},
-            { day: "Quarta", muscles: "Pernas (Proteção)", type: "weight", exercises: [
+            { day: "Quarta", muscles: "Pernas (Sem Deitar)", type: "weight", exercises: [
                 { name: "Cadeira Extensora", sets: "3x15" },
                 { name: "Cadeira Flexora", sets: "3x15" }, 
                 { name: "Leg Press 45° (Amp. Curta)", sets: "3x12" }, 
-                { name: "Elevação Pélvica no Solo", sets: "3x20" },
-                { name: "Abdução de Quadril (Deitado)", sets: "3x20" },
-                { name: "Panturrilha Sentado", sets: "4x20" }
+                { name: "Agachamento Sumô (Halter)", sets: "3x15" },
+                { name: "Panturrilha em Pé (Halteres)", sets: "4x20" }
             ]},
             { day: "Quinta", muscles: "Cardio e Mobilidade", type: "cardio", exercises: [
                 { name: "Caminhada (Sem Inclinação)", sets: "30 min" }, 
-                { name: "Alongamento de Isquiotibiais", sets: "3x30s" }
+                { name: "Alongamento Isquiotibiais", sets: "3x30s" }
             ]},
             { day: "Sexta", muscles: "Full Body Adaptado", type: "weight", exercises: [
                 { name: "Supino Inclinado com Halteres", sets: "3x12" }, 
@@ -123,18 +121,19 @@
                 { name: "Cadeira Extensora", sets: "3x15" }, 
                 { name: "Rosca Alternada Sentada", sets: "3x15" }
             ]},
-            { day: "Sábado", muscles: "Posterior e Glúteo", type: "weight", exercises: [
+            { day: "Sábado", muscles: "Glúteo e Posterior", type: "weight", exercises: [
                 { name: "Cadeira Flexora", sets: "4x12" }, 
-                { name: "Elevação Pélvica no Solo", sets: "3x20" },
+                { name: "Agachamento Sumô (Halter)", sets: "3x15" },
+                { name: "Extensão de Quadril em Pé", sets: "3x15" }, 
                 { name: "Cadeira Extensora", sets: "3x15" }, 
-                { name: "Glúteo 4 Apoios (Solo)", sets: "3x15" },
-                { name: "Prancha Abdominal", sets: "3x30s" }
+                { name: "Prancha Inclinada (No Banco)", sets: "3x30s" }
             ]},
             { day: "Domingo", muscles: "Recuperação", type: "cardio", exercises: [
                 { name: "Caminhada Leve", sets: "30 min" }
             ]}
         ];
 
+        // --- LÓGICA DE HISTÓRICO E RESET SEMANAL ---
         function getWeekID() {
             const now = new Date();
             const onejan = new Date(now.getFullYear(), 0, 1);
@@ -143,9 +142,9 @@
         }
 
         let currentDayIdx = new Date().getDay() === 0 ? 6 : new Date().getDay() - 1;
-        let completed = JSON.parse(localStorage.getItem('gym_completed_vFinal') || '{}');
-        let history = JSON.parse(localStorage.getItem('gym_history_vFinal') || '[]');
-        let lastWeek = localStorage.getItem('gym_last_week_vFinal');
+        let completed = JSON.parse(localStorage.getItem('gym_completed_vFinal_v3') || '{}');
+        let history = JSON.parse(localStorage.getItem('gym_history_vFinal_v3') || '[]');
+        let lastWeek = localStorage.getItem('gym_last_week_vFinal_v3');
 
         const currentWeek = getWeekID();
         if (lastWeek && lastWeek !== currentWeek) {
@@ -156,17 +155,17 @@
                     date: new Date().toLocaleDateString('pt-BR'),
                     stats: { done: doneCount, total: totalExercises, pct: Math.round((doneCount / totalExercises) * 100) }
                 });
-                localStorage.setItem('gym_history_vFinal', JSON.stringify(history.slice(0, 10)));
+                localStorage.setItem('gym_history_vFinal_v3', JSON.stringify(history.slice(0, 10)));
                 completed = {};
-                localStorage.setItem('gym_completed_vFinal', JSON.stringify(completed));
+                localStorage.setItem('gym_completed_vFinal_v3', JSON.stringify(completed));
             }
         }
-        localStorage.setItem('gym_last_week_vFinal', currentWeek);
+        localStorage.setItem('gym_last_week_vFinal_v3', currentWeek);
 
         function toggle(day, ex) {
             const key = `${day}-${ex}`;
             completed[key] = !completed[key];
-            localStorage.setItem('gym_completed_vFinal', JSON.stringify(completed));
+            localStorage.setItem('gym_completed_vFinal_v3', JSON.stringify(completed));
             render();
         }
 
@@ -174,11 +173,11 @@
             const modal = document.createElement('div');
             modal.className = 'fixed inset-0 z-[200] bg-black/80 backdrop-blur-sm flex items-center justify-center p-6';
             modal.innerHTML = `
-                <div class="bg-gemini-surface p-6 rounded-3xl border border-gemini-border w-full max-w-xs text-center">
-                    <p class="font-semibold text-white mb-6 text-sm">Limpar o progresso de hoje?</p>
+                <div class="bg-gemini-surface p-6 rounded-3xl border border-gemini-border w-full max-w-xs text-center shadow-2xl">
+                    <p class="font-semibold text-white mb-6 text-sm uppercase tracking-wide">Limpar o dia?</p>
                     <div class="flex gap-2">
-                        <button id="cancel-reset" class="flex-1 py-2.5 rounded-xl bg-gemini-bg text-slate-400 font-bold text-xs uppercase tracking-wider">Não</button>
-                        <button id="confirm-reset" class="flex-1 py-2.5 rounded-xl bg-red-500/20 text-red-500 font-bold border border-red-500/30 text-xs uppercase tracking-wider">Sim</button>
+                        <button id="cancel-reset" class="flex-1 py-2.5 rounded-xl bg-gemini-bg text-slate-400 font-bold text-xs">Não</button>
+                        <button id="confirm-reset" class="flex-1 py-2.5 rounded-xl bg-indigo-500/20 text-indigo-400 font-bold border border-indigo-500/30 text-xs">Sim</button>
                     </div>
                 </div>
             `;
@@ -186,7 +185,7 @@
             document.getElementById('cancel-reset').onclick = () => modal.remove();
             document.getElementById('confirm-reset').onclick = () => {
                 Object.keys(completed).forEach(key => { if(key.startsWith(currentDayIdx + '-')) delete completed[key]; });
-                localStorage.setItem('gym_completed_vFinal', JSON.stringify(completed));
+                localStorage.setItem('gym_completed_vFinal_v3', JSON.stringify(completed));
                 modal.remove();
                 render();
             };
@@ -204,15 +203,15 @@
                 <div class="space-y-4">
             `;
             if (history.length === 0) {
-                historyHTML += `<p class="text-center text-slate-500 py-20 text-[10px] font-bold uppercase tracking-widest opacity-60">Nenhum dado salvo ainda.</p>`;
+                historyHTML += `<p class="text-center text-slate-500 py-20 text-[10px] font-bold uppercase tracking-widest opacity-60">Os dados aparecerão na próxima semana.</p>`;
             } else {
                 history.forEach(item => {
                     historyHTML += `
                         <div class="history-card p-4 rounded-2xl border border-gemini-border shadow-lg">
                             <div class="flex justify-between items-center">
                                 <div><p class="text-[9px] font-bold text-indigo-500 uppercase tracking-widest mb-1">Semana de ${item.date}</p>
-                                <h3 class="text-base font-bold text-white leading-none">${item.stats.done} Concluídos</h3></div>
-                                <span class="bg-indigo-500/20 text-indigo-400 text-[10px] font-bold px-3 py-1 rounded-full border border-indigo-500/30">${item.stats.pct}%</span>
+                                <h3 class="text-base font-black text-white">${item.stats.done} Exercícios</h3></div>
+                                <span class="bg-indigo-500/20 text-indigo-400 text-[10px] font-black px-3 py-1 rounded-full border border-indigo-500/30">${item.stats.pct}%</span>
                             </div>
                         </div>
                     `;
@@ -234,8 +233,8 @@
             document.getElementById('app').innerHTML = `
                 <header class="px-6 pb-6 sticky top-0 z-20 bg-gemini-bg/95 backdrop-blur-md rounded-b-[2rem] border-b border-gemini-border shadow-xl iphone-header">
                     <div class="flex justify-between items-center mb-6">
-                        <div>
-                            <p class="text-[9px] font-bold uppercase tracking-[0.2em] text-indigo-500/80 mb-1">${SUB_TITLE}</p>
+                        <div class="text-left">
+                            <p class="text-[9px] font-black uppercase tracking-[0.2em] text-indigo-500/80 mb-1">${SUB_TITLE}</p>
                             <h1 class="text-xl font-black italic tracking-tighter text-white leading-none">${APP_NAME}</h1>
                         </div>
                         <div class="flex gap-2">
@@ -243,7 +242,7 @@
                             <button onclick="resetDay()" class="w-10 h-10 flex items-center justify-center bg-gemini-surface border border-gemini-border rounded-xl text-slate-400 active:scale-90 transition-all shadow-md"><i data-lucide="refresh-cw" class="w-5 h-5"></i></button>
                         </div>
                     </div>
-                    <div class="bg-gemini-surface p-4 rounded-2xl border border-gemini-border shadow-inner text-center">
+                    <div class="bg-gemini-surface p-4 rounded-2xl border border-gemini-border shadow-inner">
                         <div class="w-full bg-gemini-bg h-1 rounded-full overflow-hidden mb-2"><div class="bg-indigo-500 h-full transition-all duration-1000" style="width: ${pctToday}%"></div></div>
                         <span class="text-[8px] font-bold uppercase text-slate-500 tracking-widest">${pctToday}% CONCLUÍDO HOJE</span>
                     </div>
@@ -253,7 +252,7 @@
                     ${workoutData.map((d, i) => {
                         const isActive = currentDayIdx === i;
                         const colorClass = d.type === 'cardio' ? 'btn-active-cardio' : 'btn-active-weight';
-                        return `<button onclick="currentDayIdx=${i}; render()" class="flex-shrink-0 snap-start px-5 py-2.5 rounded-full text-[10px] font-bold border transition-all ${isActive ? colorClass : 'bg-gemini-surface text-slate-500 border-gemini-border'}">${d.day.toUpperCase()}</button>`;
+                        return `<button onclick="currentDayIdx=${i}; render()" class="flex-shrink-0 snap-start px-5 py-2.5 rounded-full text-[10px] font-black border transition-all ${isActive ? colorClass : 'bg-gemini-surface text-slate-500 border-gemini-border'}">${d.day.toUpperCase()}</button>`;
                     }).join('')}
                 </div>
 
@@ -287,7 +286,7 @@
                 <footer class="fixed bottom-8 left-0 right-0 flex justify-center pointer-events-none px-6">
                     <div class="bg-gemini-surface/90 text-slate-500 px-8 py-3 rounded-full text-[8px] font-bold tracking-[0.4em] uppercase border border-gemini-border backdrop-blur-lg shadow-2xl flex items-center gap-3">
                         <i data-lucide="dumbbell" class="w-4 h-4 text-indigo-500 fill-indigo-500"></i>
-                        PRO WORKOUT • SF STYLE
+                        PRO WORKOUT • FINAL
                     </div>
                 </footer>
             `;
